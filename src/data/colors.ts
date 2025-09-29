@@ -9,49 +9,40 @@ export interface ColorBox {
   chips: ColorChip[];
 }
 
+// Utility to convert hex to RGB tuple
+const hexToRgb = (hex: string): [number, number, number] => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return [r, g, b];
+};
+
+// Your provided correct rows converted to ColorChip[] with IDs
+const correctRow1 = [
+  "#B2766F", "#A97E4C", "#B17466", "#A87452", "#A28946",
+  "#A78244", "#AE725F", "#A8794E", "#A8745A", "#9D8E48"
+].map((hex, i) => ({ id: i + 1, rgb: hexToRgb(hex) }));
+
+const correctRow2 = [
+  "#97914b", "#86955c", "#7e9760", "#589480", "#7c9567",
+  "#5b947a", "#699a71", "#8d9352", "#649a76", "#529687"
+].map((hex, i) => ({ id: i + 11, rgb: hexToRgb(hex) }));
+
+const correctRow3 = [
+  "#4e9689", "#6090a5", "#7489a7", "#688fa7", "#4a9698",
+  "#4c9691", "#6c8aa6", "#52949f", "#4a9696", "#7b84a3"
+].map((hex, i) => ({ id: i + 21, rgb: hexToRgb(hex) }));
+
+const correctRow4 = [
+  "#8484a3", "#b1757f", "#ae7787", "#99819d", "#9f7f98",
+  "#8d85a3", "#a9798b", "#9483a0", "#b3757a", "#b37673"
+].map((hex, i) => ({ id: i + 31, rgb: hexToRgb(hex) }));
+
 export const colorBoxes: ColorBox[] = [
-  {
-    id: 1,
-    title: 'Box 1',
-    chips: [
-      { id: 1, rgb: [88, 0, 0] },
-      { id: 2, rgb: [92, 8, 8] },
-      { id: 3, rgb: [96, 16, 16] },
-      { id: 4, rgb: [100, 24, 24] },
-      { id: 5, rgb: [104, 32, 32] },
-      { id: 25, rgb: [128, 64, 64] },
-    ],
-  },
-  {
-    id: 2,
-    title: 'Box 2',
-    chips: [
-      { id: 26, rgb: [128, 128, 0] },
-      { id: 27, rgb: [132, 124, 8] },
-      { id: 28, rgb: [136, 120, 16] },
-      { id: 50, rgb: [64, 128, 64] },
-    ],
-  },
-  {
-    id: 3,
-    title: 'Box 3',
-    chips: [
-      { id: 51, rgb: [0, 128, 64] },
-      { id: 52, rgb: [8, 124, 68] },
-      { id: 53, rgb: [16, 120, 72] },
-      { id: 75, rgb: [64, 64, 128] },
-    ],
-  },
-  {
-    id: 4,
-    title: 'Box 4',
-    chips: [
-      { id: 76, rgb: [64, 64, 128] },
-      { id: 77, rgb: [60, 68, 132] },
-      { id: 78, rgb: [56, 72, 136] },
-      { id: 100, rgb: [88, 0, 88] },
-    ],
-  },
+  { id: 1, title: "Box 1", chips: correctRow1 },
+  { id: 2, title: "Box 2", chips: correctRow2 },
+  { id: 3, title: "Box 3", chips: correctRow3 },
+  { id: 4, title: "Box 4", chips: correctRow4 }
 ];
 
 export const shuffleBox = (box: ColorBox): ColorChip[] => {
@@ -59,6 +50,19 @@ export const shuffleBox = (box: ColorBox): ColorChip[] => {
   const fixedEnd = box.chips[box.chips.length - 1];
   const middle = [...box.chips].slice(1, -1).sort(() => Math.random() - 0.5);
   return [fixedStart, ...middle, fixedEnd];
+};
+
+export const getHue = (rgb: [number, number, number]): number => {
+  const [r, g, b] = rgb.map(c => c / 255);
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  if (max === min) return 0;
+
+  let h: number;
+  if (max === r) h = (g - b) / (max - min) + (g < b ? 6 : 0);
+  else if (max === g) h = (b - r) / (max - min) + 2;
+  else h = (r - g) / (max - min) + 4;
+
+  return h * 60;
 };
 
 export const calculateScore = (boxes: ColorBox[]): number => {
@@ -70,20 +74,9 @@ export const calculateScore = (boxes: ColorBox[]): number => {
     box.chips.forEach((chip, i) => {
       const correctIndex = correctOrder.findIndex(c => c.id === chip.id);
       const positionError = Math.abs(i - correctIndex);
-      totalError += positionError ** 2; // or use hue diff if you prefer
+      totalError += positionError ** 2;
     });
   });
 
   return Math.round(Math.sqrt(totalError));
-};
-
-const getHue = (rgb: [number, number, number]): number => {
-  const r = rgb[0] / 255, g = rgb[1] / 255, b = rgb[2] / 255;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b);
-  if (max === min) return 0;
-  let h;
-  if (max === r) h = (g - b) / (max - min) + (g < b ? 6 : 0);
-  else if (max === g) h = (b - r) / (max - min) + 2;
-  else h = (r - g) / (max - min) + 4;
-  return h * 60;
 };
