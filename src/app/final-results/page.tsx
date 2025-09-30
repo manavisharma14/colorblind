@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // Define types for your stored session data
 interface HueScores {
-  boxes: unknown[]; // or your actual ColorBox[]
+  boxes: unknown[];
   userData: { gender: string; age: string };
   totalScore: number;
   perZoneScores: number[];
 }
 
 interface IshiharaResult {
-  scores: unknown[]; // or PlateScore[]
+  scores: unknown[];
   result: {
     type: string;
     severity: string;
@@ -31,7 +33,6 @@ export default function FinalResultsPage() {
   const [localData, setLocalData] = useState<CombinedData | null>(null);
 
   useEffect(() => {
-    // Load Ishihara + Hue results from sessionStorage
     const ishiharaRaw = sessionStorage.getItem("ishihara_scores");
     const hueRaw = sessionStorage.getItem("hue_scores");
 
@@ -60,13 +61,9 @@ export default function FinalResultsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "AI analysis failed");
 
-      setAnalysis(data.analysis);
+      setAnalysis(data.analysis); // Keep it as raw Markdown
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Unknown error occurred");
-      }
+      setError(err instanceof Error ? err.message : "Unknown error occurred");
     } finally {
       setLoading(false);
     }
@@ -90,7 +87,9 @@ export default function FinalResultsPage() {
 
       {analysis && (
         <div className="bg-white p-6 rounded-lg shadow prose prose-sm max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: analysis.replace(/\n/g, "<br/>") }} />
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {analysis}
+          </ReactMarkdown>
         </div>
       )}
 

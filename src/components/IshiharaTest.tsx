@@ -29,7 +29,7 @@ export function IshiharaTest({ plates }: { plates: Plate[] }) {
       if (typeof window !== 'undefined') {
         sessionStorage.setItem("ishihara_scores", JSON.stringify({ scores, result }));
       }
-      router.push("/ishihara/results");
+      router.push("/hue-test");
     }
   };
 

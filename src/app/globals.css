@@ -24,3 +24,12 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.analysis-heading {
+  font-size: 1.25rem; /* Slightly larger than body text */
+  font-weight: bold;  /* Bold for emphasis */
+  margin-top: 1rem;   /* Space above heading */
+  margin-bottom: 0.5rem; /* Space below heading */
+  color: #1a202c;     /* Dark text for contrast */
+}
