@@ -1,16 +1,16 @@
+// src/app/ishihara/results/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Plate, PlateScore, ScoredResult } from "../../../lib/ishihara";
-import { ishihara24 } from "../../../data/ishihara24";
-import { IshiharaSummary } from "../../../components/IshiharaSummary";
+import type { Plate, PlateScore, ScoredResult } from "@/lib/ishihara";
+import { ishihara24 } from "@/data/ishihara24";
+import { IshiharaSummary } from "@/components/IshiharaSummary";
+import { useRouter } from "next/navigation";
 
 export default function ResultsPage() {
   const [scores, setScores] = useState<PlateScore[] | null>(null);
   const [result, setResult] = useState<ScoredResult | null>(null);
-  const [ai, setAi] = useState<string>("");
-  const [loadingAi, setLoadingAi] = useState(false);
-  const [aiError, setAiError] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const raw = sessionStorage.getItem("ishihara_scores");
@@ -24,38 +24,6 @@ export default function ResultsPage() {
       console.error("Failed to parse Ishihara scores:", e);
     }
   }, []);
-
-  async function analyzeWithGemini() {
-    if (!result || !scores) return;
-    setLoadingAi(true);
-    setAiError("");
-    setAi("");
-
-    try {
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          results: {
-            ...result,
-            perPlate: scores,
-          },
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "AI analysis failed");
-      setAi(data.analysis);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setAiError(err.message);
-      } else {
-        setAiError("AI analysis failed");
-      }
-    } finally {
-      setLoadingAi(false);
-    }
-  }
 
   if (!scores || !result) {
     return (
@@ -72,32 +40,14 @@ export default function ResultsPage() {
       {/* Summary and per-plate table */}
       <IshiharaSummary result={result} plates={ishihara24 as Plate[]} />
 
-      {/* AI analysis section */}
-      <div className="rounded-2xl border p-4 shadow space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">AI Analysis (Gemini)</h2>
-          <button
-            onClick={analyzeWithGemini}
-            disabled={loadingAi}
-            className="rounded-2xl bg-blue-600 text-white px-4 py-2 disabled:opacity-60"
-          >
-            {loadingAi ? "Analyzing…" : "Analyze with Gemini"}
-          </button>
-        </div>
-
-        {aiError && <p className="text-sm text-red-600">{aiError}</p>}
-
-        {ai && (
-          <div className="bg-gray-50 rounded-xl p-3 whitespace-pre-wrap text-sm">
-            {ai}
-          </div>
-        )}
-
-        {!ai && !loadingAi && (
-          <p className="text-xs opacity-70">
-            Note: Ishihara is a screening tool, not a diagnosis. AI analysis is informational only.
-          </p>
-        )}
+      {/* 🔹 Button to go to Final Results */}
+      <div className="text-center">
+        <button
+          onClick={() => router.push("/final-results")}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          View Combined Analysis →
+        </button>
       </div>
     </main>
   );

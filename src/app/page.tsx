@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 export default function Home() {
@@ -19,33 +21,6 @@ export default function Home() {
             >
               Start Ishihara Test
             </Link>
-            <Link
-              href="/ishihara/results"
-              className="inline-block rounded-2xl border px-6 py-3 shadow hover:bg-gray-50"
-            >
-              View Last Ishihara Results
-            </Link>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-semibold">Hue Discrimination Test</h2>
-          <p className="opacity-80 text-md mt-2">
-            Arrange colored tiles in order of hue to test your ability to distinguish subtle color differences.
-          </p>
-          <div className="space-x-4 mt-2">
-            <Link
-              href="/hue-test"
-              className="inline-block rounded-2xl bg-blue-600 text-white px-6 py-3 shadow hover:bg-blue-700"
-            >
-              Start Hue Test
-            </Link>
-            {/* <Link
-              href="/hue/results"
-              className="inline-block rounded-2xl border px-6 py-3 shadow hover:bg-gray-50"
-            >
-              View Last Hue Test Results
-            </Link> */}
           </div>
         </div>
       </div>
