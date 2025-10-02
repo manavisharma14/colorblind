@@ -77,9 +77,10 @@ export const calculateScore = (boxes: ColorBox[]): number => {
     box.chips.forEach((chip, i) => {
       const correctIndex = correctOrder.findIndex((c) => c.id === chip.id);
       const positionError = Math.abs(i - correctIndex);
-      totalError += positionError ** 2;
+      totalError += positionError; // absolute error, not squared
     });
   });
 
-  return Math.round(Math.sqrt(totalError));
+  return totalError; // raw sum, lower = better
 };
+
