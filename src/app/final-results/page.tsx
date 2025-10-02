@@ -74,24 +74,57 @@ export default function FinalResultsPage() {
       <h1 className="text-3xl font-bold text-center">Final Combined Analysis</h1>
 
       <div className="text-center">
-        <button
-          onClick={runCombinedAnalysis}
-          disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
-        >
-          {loading ? "Analyzing..." : "Run Combined AI Analysis"}
-        </button>
+      <div className="text-center">
+  <button
+    onClick={runCombinedAnalysis}
+    disabled={loading || !!analysis}  // disable if analysis already exists
+    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+  >
+    {loading ? "Analyzing..." : "Run Combined AI Analysis"}
+  </button>
+</div>
       </div>
 
       {error && <p className="text-red-600 text-center">{error}</p>}
 
       {analysis && (
-        <div className="bg-white p-6 rounded-lg shadow prose prose-sm max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {analysis}
-          </ReactMarkdown>
-        </div>
-      )}
+  <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl shadow-lg p-6 max-h-[70vh] overflow-y-auto">
+    <div className="prose prose-gray max-w-none">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({ node, ...props }) => (
+            <h1 className="text-2xl font-bold text-indigo-700 border-b pb-2 mb-4" {...props} />
+          ),
+          h2: ({ node, ...props }) => (
+            <h2 className="text-xl font-semibold text-indigo-600 mt-6 mb-2" {...props} />
+          ),
+          h3: ({ node, ...props }) => (
+            <h3 className="text-lg font-medium text-indigo-500 mt-4 mb-1" {...props} />
+          ),
+          p: ({ node, ...props }) => (
+            <p className="text-gray-700 leading-relaxed mb-3" {...props} />
+          ),
+          ul: ({ node, ...props }) => (
+            <ul className="list-disc pl-6 space-y-1 text-gray-700" {...props} />
+          ),
+          li: ({ node, ...props }) => (
+            <li className="marker:text-indigo-500" {...props} />
+          ),
+          strong: ({ node, ...props }) => (
+            <strong className="font-bold text-indigo-800" {...props} />
+          ),
+          code: ({ node, ...props }) => (
+            <code className="px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 font-mono text-sm" {...props} />
+          ),
+        }}
+      >
+        {analysis}
+      </ReactMarkdown>
+    </div>
+  </div>
+)}
+
 
       {!analysis && !loading && (
         <p className="text-gray-500 text-center text-sm">

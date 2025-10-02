@@ -17,7 +17,7 @@ const hexToRgb = (hex: string): [number, number, number] => {
   return [r, g, b];
 };
 
-// Your provided correct rows converted to ColorChip[] with IDs
+// Correct rows converted to ColorChip[]
 const correctRow1 = [
   "#B2766F", "#A97E4C", "#B17466", "#A87452", "#A28946",
   "#A78244", "#AE725F", "#A8794E", "#A8745A", "#9D8E48"
@@ -45,6 +45,7 @@ export const colorBoxes: ColorBox[] = [
   { id: 4, title: "Box 4", chips: correctRow4 }
 ];
 
+// Shuffle only middle chips, keep first/last fixed
 export const shuffleBox = (box: ColorBox): ColorChip[] => {
   const fixedStart = box.chips[0];
   const fixedEnd = box.chips[box.chips.length - 1];
@@ -69,10 +70,12 @@ export const calculateScore = (boxes: ColorBox[]): number => {
   let totalError = 0;
 
   boxes.forEach((box) => {
-    const correctOrder = [...box.chips].sort((a, b) => getHue(a.rgb) - getHue(b.rgb));
+    const correctOrder = [...box.chips].sort(
+      (a, b) => getHue(a.rgb) - getHue(b.rgb)
+    );
 
     box.chips.forEach((chip, i) => {
-      const correctIndex = correctOrder.findIndex(c => c.id === chip.id);
+      const correctIndex = correctOrder.findIndex((c) => c.id === chip.id);
       const positionError = Math.abs(i - correctIndex);
       totalError += positionError ** 2;
     });
