@@ -8,8 +8,9 @@ export default function Home() {
     <main
       style={{
         minHeight: "100vh",
-        backgroundColor: "#09090b",
-        color: "#fafafa",
+        background:
+          "linear-gradient(180deg, #fcfefe 0%, #f8fafc 48%, #f1f5f9 100%)",
+        color: "#0f172a",
         fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif",
         display: "flex",
         flexDirection: "column",
@@ -20,275 +21,210 @@ export default function Home() {
         overflow: "hidden",
       }}
     >
-      {/* Google Fonts */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display&display=swap');
 
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; transform: translateY(18px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
-        }
-
-        .card-link {
-          text-decoration: none;
-          display: block;
+        .fade {
           opacity: 0;
-          animation: fadeUp 0.6s ease forwards;
+          animation: fadeUp .75s ease forwards;
         }
 
-        .card-link:nth-child(1) { animation-delay: 0.3s; }
-        .card-link:nth-child(2) { animation-delay: 0.45s; }
-
-        .test-card {
-          background: #111113;
-          border: 1px solid #1f1f23;
-          border-radius: 20px;
-          padding: 40px;
-          transition: border-color 0.2s, background 0.2s, transform 0.2s;
-          cursor: pointer;
-          height: 100%;
-          box-sizing: border-box;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .card-ishihara:hover {
-          border-color: #e55c30;
-          background: #120f0e;
-          transform: translateY(-3px);
-        }
-
-        .card-hue:hover {
-          border-color: #5b5bd6;
-          background: #0e0e15;
-          transform: translateY(-3px);
-        }
-
-        .arrow-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid #2a2a2e;
-          transition: border-color 0.2s, background 0.2s;
-        }
-
-        .card-ishihara:hover .arrow-icon {
-          background: #e55c30;
-          border-color: #e55c30;
-        }
-
-        .card-hue:hover .arrow-icon {
-          background: #5b5bd6;
-          border-color: #5b5bd6;
-        }
-
-        .badge {
-          display: inline-block;
-          font-size: 11px;
-          font-weight: 500;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          padding: 5px 10px;
-          border-radius: 100px;
-          border: 1px solid;
-          margin-bottom: 24px;
-        }
-
-        .badge-red {
-          color: #f08060;
-          border-color: #3d1f14;
-          background: #1c0f09;
-        }
-
-        .badge-indigo {
-          color: #9090ee;
-          border-color: #2a2a5a;
-          background: #0e0e24;
-        }
-
-        .plate-dot {
-          border-radius: 50%;
-          position: absolute;
-        }
-
-        .hero-tag {
-          font-size: 11px;
-          font-weight: 500;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #5f5f6e;
-          margin-bottom: 28px;
-          opacity: 0;
-          animation: fadeUp 0.5s ease 0.05s forwards;
-        }
-
-        .hero-title {
-          opacity: 0;
-          animation: fadeUp 0.5s ease 0.1s forwards;
-        }
-
-        .hero-sub {
-          opacity: 0;
-          animation: fadeUp 0.5s ease 0.2s forwards;
-        }
-
-        .divider {
-          width: 40px;
-          height: 1px;
-          background: #2a2a2e;
-          margin: 40px auto;
-          opacity: 0;
-          animation: fadeUp 0.4s ease 0.25s forwards;
-        }
+        .delay-1 { animation-delay: .05s; }
+        .delay-2 { animation-delay: .15s; }
+        .delay-3 { animation-delay: .25s; }
+        .delay-4 { animation-delay: .35s; }
 
         .cards-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 16px;
+          gap: 22px;
           width: 100%;
-          max-width: 780px;
+          max-width: 860px;
         }
 
-        @media (max-width: 620px) {
-          .cards-grid { grid-template-columns: 1fr; }
+        .card-link {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        .card {
+          background: rgba(255,255,255,0.84);
+          backdrop-filter: blur(14px);
+          border: 1px solid rgba(255,255,255,0.85);
+          border-radius: 30px;
+          padding: 34px;
+          box-shadow:
+            0 14px 40px rgba(15,23,42,0.05),
+            0 4px 12px rgba(15,23,42,0.04);
+          transition: all .28s ease;
+          height: 100%;
+        }
+
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow:
+            0 22px 55px rgba(15,23,42,0.08),
+            0 8px 18px rgba(15,23,42,0.05);
+        }
+
+        .card-blue:hover { border-color: #b9d6ff; }
+        .card-green:hover { border-color: #b8ecd8; }
+
+        .badge {
+          display: inline-block;
+          padding: 6px 12px;
+          border-radius: 999px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: .08em;
+          text-transform: uppercase;
+          margin-bottom: 22px;
+        }
+
+        .badge-blue {
+          background: #eff6ff;
+          color: #0f6fff;
+        }
+
+        .badge-green {
+          background: #ecfdf5;
+          color: #059669;
+        }
+
+        .arrow {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          transition: all .2s ease;
+        }
+
+        .card:hover .arrow {
+          transform: translateX(2px);
+          box-shadow: 0 6px 12px rgba(15,23,42,0.08);
+        }
+
+        @media (max-width: 760px) {
+          .cards-grid {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
 
-      {/* Subtle radial glow behind content */}
+      {/* background glow */}
       <div
         style={{
           position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "700px",
-          height: "500px",
-          background:
-            "radial-gradient(ellipse at center, rgba(91,91,214,0.05) 0%, transparent 70%)",
-          pointerEvents: "none",
+          width: 420,
+          height: 420,
+          borderRadius: "50%",
+          background: "rgba(15,111,255,0.08)",
+          filter: "blur(90px)",
+          top: -120,
+          right: -80,
         }}
       />
 
-      {/* Content */}
       <div
         style={{
-          maxWidth: "780px",
+          position: "absolute",
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background: "rgba(18,185,129,0.08)",
+          filter: "blur(90px)",
+          bottom: -120,
+          left: -80,
+        }}
+      />
+
+      <div
+        style={{
+          maxWidth: 880,
           width: "100%",
-          textAlign: "center",
           position: "relative",
-          zIndex: 1,
+          zIndex: 2,
+          textAlign: "center",
         }}
       >
-        {/* Eyebrow */}
-        <p className="hero-tag">Clinical Vision Assessment</p>
-
-        {/* Title */}
-        <h1
-          className="hero-title"
+        <p
+          className="fade delay-1"
           style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
-            fontSize: "clamp(42px, 7vw, 76px)",
-            fontWeight: 400,
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            color: "#fafafa",
-            margin: "0 0 20px",
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: ".14em",
+            textTransform: "uppercase",
+            color: "#64748b",
+            marginBottom: 24,
+          }}
+        >
+          Clinical Vision Assessment
+        </p>
+
+        <h1
+          className="fade delay-2"
+          style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "clamp(44px, 8vw, 78px)",
+            lineHeight: 1.03,
+            margin: 0,
+            color: "#0f172a",
           }}
         >
           Color Vision
           <br />
-          <span style={{ color: "#3d3d4e", fontStyle: "italic" }}>Testing Suite</span>
+          <span style={{ color: "#64748b", fontStyle: "italic" }}>
+            Testing Suite
+          </span>
         </h1>
 
-        {/* Subtitle */}
         <p
-          className="hero-sub"
+          className="fade delay-3"
           style={{
-            fontSize: "16px",
-            fontWeight: 300,
-            lineHeight: 1.7,
-            color: "#6b6b7b",
-            maxWidth: "480px",
-            margin: "0 auto",
+            margin: "22px auto 46px",
+            maxWidth: 580,
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "#64748b",
+            fontWeight: 400,
           }}
         >
           Scientifically validated assessments for red-green deficiency and hue
-          discrimination. Results for educational screening only.
+          discrimination in a refined, modern clinical experience.
         </p>
 
-        <div className="divider" />
-
-        {/* Cards */}
-        <div className="cards-grid">
-          {/* Ishihara Card */}
+        <div className="cards-grid fade delay-4">
+          {/* Ishihara */}
           <Link href="/ishihara" className="card-link">
-            <div className="test-card card-ishihara">
-              {/* Decorative plate illustration */}
+            <div className="card card-blue">
               <div
                 style={{
-                  position: "relative",
-                  width: "56px",
-                  height: "56px",
-                  marginBottom: "28px",
+                  width: 58,
+                  height: 58,
+                  borderRadius: "50%",
+                  background:
+                    "radial-gradient(circle at 30% 30%, #7dd3fc, #0f6fff)",
+                  marginBottom: 24,
                 }}
-              >
-                <div
-                  style={{
-                    width: "56px",
-                    height: "56px",
-                    borderRadius: "50%",
-                    background: "#1e1210",
-                    border: "1px solid #2d1a12",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  {[
-                    { w: 7, h: 7, top: 8, left: 10, bg: "#d44e22" },
-                    { w: 5, h: 5, top: 6, left: 28, bg: "#c03e1a" },
-                    { w: 8, h: 8, top: 20, left: 6, bg: "#b83415" },
-                    { w: 6, h: 6, top: 22, left: 22, bg: "#e05a2a" },
-                    { w: 5, h: 5, top: 18, left: 36, bg: "#cf4820" },
-                    { w: 7, h: 7, top: 34, left: 14, bg: "#d44e22" },
-                    { w: 9, h: 9, top: 32, left: 32, bg: "#bb3a16" },
-                    { w: 5, h: 5, top: 8, left: 42, bg: "#d85428" },
-                    { w: 6, h: 6, top: 42, left: 4, bg: "#c24018" },
-                    { w: 4, h: 4, top: 44, left: 26, bg: "#e06030" },
-                  ].map((dot, i) => (
-                    <div
-                      key={i}
-                      className="plate-dot"
-                      style={{
-                        width: dot.w,
-                        height: dot.h,
-                        top: dot.top,
-                        left: dot.left,
-                        background: dot.bg,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
+              />
 
-              <span className="badge badge-red">24 Plates</span>
+              <span className="badge badge-blue">24 Plates</span>
 
               <h2
                 style={{
-                  fontFamily: "'DM Serif Display', Georgia, serif",
-                  fontSize: "26px",
-                  fontWeight: 400,
-                  color: "#f5f0ef",
+                  fontSize: 28,
                   margin: "0 0 10px",
-                  letterSpacing: "-0.01em",
-                  textAlign: "left",
+                  fontFamily: "'DM Serif Display', serif",
+                  fontWeight: 400,
                 }}
               >
                 Ishihara Test
@@ -296,65 +232,62 @@ export default function Home() {
 
               <p
                 style={{
-                  fontSize: "14px",
-                  fontWeight: 300,
-                  color: "#5a5a6a",
-                  lineHeight: 1.65,
-                  margin: "0 0 32px",
-                  textAlign: "left",
+                  fontSize: 15,
+                  lineHeight: 1.75,
+                  color: "#64748b",
+                  marginBottom: 28,
                 }}
               >
-                The gold standard for red-green color blindness detection using
-                pseudoisochromatic plates.
+                Gold-standard screening for red-green color vision deficiency
+                using clinically recognized pseudoisochromatic plates.
               </p>
 
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
                 <span
-                  style={{ fontSize: "13px", fontWeight: 500, color: "#e55c30" }}
+                  style={{
+                    color: "#0f6fff",
+                    fontWeight: 600,
+                    fontSize: 14,
+                  }}
                 >
                   Start test
                 </span>
-                <div className="arrow-icon">
-                  <ArrowRight size={14} color="#888" />
+
+                <div className="arrow">
+                  <ArrowRight size={16} />
                 </div>
               </div>
             </div>
           </Link>
 
-          {/* Hue Discrimination Card */}
+          {/* Hue */}
           <Link href="/hue" className="card-link">
-            <div className="test-card card-hue">
-              {/* Spectrum illustration */}
+            <div className="card card-green">
               <div
                 style={{
-                  width: "56px",
-                  height: "56px",
+                  width: 58,
+                  height: 58,
                   borderRadius: "50%",
                   background:
-                    "conic-gradient(#e24b4a, #e87c30, #e6c840, #4caf6e, #378add, #7c5bd6, #c050a0, #e24b4a)",
-                  marginBottom: "28px",
-                  border: "1px solid #2a2a2e",
-                  flexShrink: 0,
+                    "conic-gradient(#0f6fff,#06b6d4,#12b981,#84cc16,#0f6fff)",
+                  marginBottom: 24,
                 }}
               />
 
-              <span className="badge badge-indigo">Adaptive</span>
+              <span className="badge badge-green">Adaptive</span>
 
               <h2
                 style={{
-                  fontFamily: "'DM Serif Display', Georgia, serif",
-                  fontSize: "26px",
-                  fontWeight: 400,
-                  color: "#f0f0f8",
+                  fontSize: 28,
                   margin: "0 0 10px",
-                  letterSpacing: "-0.01em",
-                  textAlign: "left",
+                  fontFamily: "'DM Serif Display', serif",
+                  fontWeight: 400,
                 }}
               >
                 Hue Discrimination
@@ -362,48 +295,50 @@ export default function Home() {
 
               <p
                 style={{
-                  fontSize: "14px",
-                  fontWeight: 300,
-                  color: "#5a5a6a",
-                  lineHeight: 1.65,
-                  margin: "0 0 32px",
-                  textAlign: "left",
+                  fontSize: 15,
+                  lineHeight: 1.75,
+                  color: "#64748b",
+                  marginBottom: 28,
                 }}
               >
-                Test your ability to distinguish subtle color differences across
-                the full spectrum with adaptive difficulty.
+                Measure sensitivity to subtle color differences across the full
+                visible spectrum with adaptive precision.
               </p>
 
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
                 <span
-                  style={{ fontSize: "13px", fontWeight: 500, color: "#7878d8" }}
+                  style={{
+                    color: "#059669",
+                    fontWeight: 600,
+                    fontSize: 14,
+                  }}
                 >
                   Start test
                 </span>
-                <div className="arrow-icon">
-                  <ArrowRight size={14} color="#888" />
+
+                <div className="arrow">
+                  <ArrowRight size={16} />
                 </div>
               </div>
             </div>
           </Link>
         </div>
 
-        {/* Footer */}
         <p
           style={{
-            marginTop: "48px",
-            fontSize: "12px",
-            color: "#3a3a46",
-            letterSpacing: "0.02em",
+            marginTop: 44,
+            fontSize: 12,
+            color: "#94a3b8",
           }}
         >
-          © {new Date().getFullYear()} Color Vision App · Not a medical diagnosis
+          © {new Date().getFullYear()} Color Vision App · Educational screening
+          only
         </p>
       </div>
     </main>

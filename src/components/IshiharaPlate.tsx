@@ -1,9 +1,10 @@
 "use client";
+
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Plate } from "../lib/ishihara";
 import { Countdown } from "./Countdown";
-import { ArrowRight, Eye, Clock} from "lucide-react";
+import { ArrowRight, Eye, Clock } from "lucide-react";
 
 export function IshiharaPlate({
   plate,
@@ -11,7 +12,11 @@ export function IshiharaPlate({
   timeLimitSec,
 }: {
   plate: Plate;
-  onSubmit: (answer: { value: string; latencyMs: number; timedOut?: boolean }) => void;
+  onSubmit: (answer: {
+    value: string;
+    latencyMs: number;
+    timedOut?: boolean;
+  }) => void;
   timeLimitSec: number;
 }) {
   const [value, setValue] = useState("");
@@ -31,89 +36,107 @@ export function IshiharaPlate({
 
   return (
     <div className="flex flex-col items-center gap-6 animate-fade-in-up">
-      {/* Plate Info */}
-      <div className="w-full max-w-md bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-indigo-100 shadow-xl">
-        <div className="flex items-center justify-between">
+      {/* Plate Header */}
+      <div className="w-full max-w-md rounded-[28px] border border-white/70 bg-white/90 backdrop-blur-xl p-6 shadow-xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-white to-emerald-50" />
+
+        <div className="relative flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl">
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-[#0F6FFF] to-[#12B981] shadow-md">
               <Eye className="w-5 h-5 text-white" />
             </div>
+
             <div>
-              <p className="text-lg font-semibold text-gray-900">Plate {plate.id}</p>
+              <p className="text-lg font-semibold text-slate-900">
+                Plate {plate.id}
+              </p>
+
               {plate.type === "demonstration" && (
-                <p className="text-sm text-indigo-600">Practice Plate</p>
+                <p className="text-sm font-medium text-[#0F6FFF]">
+                  Practice Plate
+                </p>
               )}
             </div>
           </div>
-          
+
           {plate.type !== "demonstration" && (
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <Clock className="w-4 h-4" />
-              <Countdown seconds={timeLimitSec} onElapsed={() => submit(true)} />
+            <div className="flex items-center gap-2 rounded-full bg-slate-50 px-3 py-2 text-sm text-slate-600 border border-slate-200">
+              <Clock className="w-4 h-4 text-[#0F6FFF]" />
+              <Countdown
+                seconds={timeLimitSec}
+                onElapsed={() => submit(true)}
+              />
             </div>
           )}
         </div>
       </div>
 
-      {/* Image */}
+      {/* Plate Image */}
       <div className="w-full max-w-md group">
-        <div className="relative bg-white rounded-3xl p-4 shadow-2xl border-4 border-white/50">
+        <div className="relative rounded-[32px] bg-white p-4 shadow-2xl border border-slate-100 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white to-emerald-50/50" />
+
           <Image
             src={plate.imageSrc}
             alt={`Ishihara plate ${plate.id}`}
             width={800}
             height={800}
-            className="w-full h-auto rounded-2xl transition-transform group-hover:scale-[1.02] duration-300"
             priority
+            className="relative w-full h-auto rounded-2xl transition-transform duration-300 group-hover:scale-[1.015]"
           />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 rounded-2xl transition-colors" />
         </div>
       </div>
 
-      {/* Input */}
-      <div className="w-full max-w-md space-y-4">
-        <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-4 border border-indigo-100 shadow-xl">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            What number do you see?
-          </label>
-          <div className="flex gap-3">
-            <input
-              type="text"
-              inputMode="numeric"
-              maxLength={2}
-              placeholder="12"
-              className={`
-                flex-1 rounded-xl border-2 p-4 text-lg font-semibold text-center
-                transition-all duration-200
-                ${isFocused 
-                  ? "border-indigo-500 shadow-lg shadow-indigo-100 bg-indigo-50" 
-                  : "border-gray-200 hover:border-indigo-300"
-                }
-              `}
-              value={value}
-              onChange={(e) => setValue(e.target.value.replace(/\D/g, ''))}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              onKeyDown={(e) => { if (e.key === 'Enter') submit(false); }}
-            />
-            <button
-              onClick={() => submit(false)}
-              className="px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
-            >
-              <ArrowRight className="w-5 h-5" />
-              Next
-            </button>
-          </div>
-          <p className="text-xs text-gray-500 mt-2 text-center">
-            Leave blank if you see no number
-          </p>
+      {/* Answer Card */}
+      <div className="w-full max-w-md rounded-[28px] border border-white/70 bg-white/90 backdrop-blur-xl p-5 shadow-xl">
+        <label className="block text-sm font-medium text-slate-700 mb-3">
+          What number do you see?
+        </label>
+
+        <div className="flex gap-3">
+          <input
+            type="text"
+            inputMode="numeric"
+            maxLength={2}
+            placeholder="12"
+            value={value}
+            onChange={(e) =>
+              setValue(e.target.value.replace(/\D/g, ""))
+            }
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") submit(false);
+            }}
+            className={`
+              flex-1 rounded-2xl border-2 p-4 text-lg font-semibold text-center outline-none transition-all duration-200
+              ${
+                isFocused
+                  ? "border-[#0F6FFF] bg-blue-50 shadow-lg shadow-blue-100"
+                  : "border-slate-200 hover:border-blue-300"
+              }
+            `}
+          />
+
+          <button
+            onClick={() => submit(false)}
+            className="px-6 py-4 rounded-2xl text-white font-semibold bg-gradient-to-r from-[#0F6FFF] via-[#06B6D4] to-[#12B981] hover:shadow-xl transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+          >
+            <ArrowRight className="w-5 h-5" />
+            Next
+          </button>
         </div>
+
+        <p className="text-xs text-slate-500 mt-3 text-center">
+          Leave blank if no number is visible
+        </p>
       </div>
 
-      {/* Instructions */}
-      <div className="w-full max-w-md bg-blue-50/80 backdrop-blur-xl rounded-xl p-4 border border-blue-100">
-        <p className="text-xs text-blue-800 text-center">
-          👁️ View at 75cm distance • Use daylight lighting • Disable screen filters
+      {/* Instruction Note */}
+      <div className="w-full max-w-md rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 to-emerald-50 px-4 py-4 shadow-sm">
+        <p className="text-xs text-slate-700 text-center leading-6">
+          👁️ View at 75cm distance • Use daylight lighting • Disable screen
+          filters
         </p>
       </div>
     </div>

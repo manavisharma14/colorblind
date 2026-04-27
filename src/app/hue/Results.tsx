@@ -8,11 +8,10 @@ import { useRouter } from "next/navigation";
 interface ResultsProps {
   boxes: ColorBox[];
   userData: { gender: string; age: string };
-  setUserData: (data: { gender: string; age: string }) => void;
 }
 
-export default function Results({ boxes, userData, setUserData }: ResultsProps) {
-  const [localUserData, setLocalUserData] = useState(userData);
+export default function Results({ boxes, userData }: ResultsProps) {
+  const [localUserData] = useState(userData);
   const router = useRouter();
 
   const totalScore = calculateScore(boxes);
