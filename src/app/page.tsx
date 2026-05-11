@@ -360,7 +360,7 @@ export default function Home() {
               <p className="bc-about-body">
                 BeyondColor started with a simple observation: the Ishihara test,
                 created in 1917, is still the global standard — yet 85% of
-                ophthalmologists admit it doesn't meet their diagnostic needs.
+                ophthalmologists admit it doesn&apos;t meet their diagnostic needs.
                 <br /><br />
                 We set out to build something better: a platform that combines
                 diagnostic screening with functional hue discrimination to generate
@@ -370,7 +370,7 @@ export default function Home() {
             </div>
             <div style={{ paddingTop: 8 }}>
               <p className="bc-mission-quote">
-                "Help kids see the world their way."
+                Help kids see the world their way.
               </p>
               <div className="bc-highlights">
                 {[
@@ -433,8 +433,8 @@ export default function Home() {
             </p>
             <h3 className="bc-demo-h3">Ready to pilot<br />BeyondColor?</h3>
             <p className="bc-demo-sub">
-              We're actively partnering with educational institutions, occupational
-              health programs, and EdTech platforms. Let's build something meaningful together.
+              We&apos;re actively partnering with educational institutions, occupational
+              health programs, and EdTech platforms. Let&apos;s build something meaningful together.
             </p>
             <p className="bc-demo-email">
               Or email us directly at{" "}
