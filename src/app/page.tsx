@@ -22,22 +22,83 @@ export default function Home() {
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap');
 
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(18px); }
           to { opacity: 1; transform: translateY(0); }
         }
 
-        .fade {
-          opacity: 0;
-          animation: fadeUp .75s ease forwards;
-        }
-
+        .fade { opacity: 0; animation: fadeUp .75s ease forwards; }
         .delay-1 { animation-delay: .05s; }
         .delay-2 { animation-delay: .15s; }
         .delay-3 { animation-delay: .25s; }
         .delay-4 { animation-delay: .35s; }
+        .delay-5 { animation-delay: .45s; }
+        .delay-6 { animation-delay: .55s; }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 12px;
+          width: 100%;
+          max-width: 860px;
+          margin: 0 auto 36px;
+        }
+
+        .stat-card {
+          background: rgba(255,255,255,0.7);
+          border: 1px solid rgba(226,232,240,0.8);
+          border-radius: 16px;
+          padding: 16px 14px;
+          text-align: center;
+        }
+
+        .stat-num {
+          font-size: 22px;
+          font-weight: 700;
+          color: #0f172a;
+          line-height: 1.1;
+        }
+
+        .stat-lbl {
+          font-size: 11px;
+          color: #64748b;
+          margin-top: 4px;
+          line-height: 1.4;
+        }
+
+        .traction-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 10px;
+          width: 100%;
+          max-width: 860px;
+          margin: 0 auto 40px;
+        }
+
+        .traction-card {
+          background: rgba(255,255,255,0.6);
+          border: 1px solid rgba(226,232,240,0.7);
+          border-radius: 14px;
+          padding: 14px;
+          text-align: left;
+        }
+
+        .traction-label {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+          color: #94a3b8;
+          margin-bottom: 5px;
+        }
+
+        .traction-val {
+          font-size: 12px;
+          color: #334155;
+          line-height: 1.5;
+        }
 
         .cards-grid {
           display: grid;
@@ -86,15 +147,8 @@ export default function Home() {
           margin-bottom: 22px;
         }
 
-        .badge-blue {
-          background: #eff6ff;
-          color: #0f6fff;
-        }
-
-        .badge-green {
-          background: #ecfdf5;
-          color: #059669;
-        }
+        .badge-blue { background: #eff6ff; color: #0f6fff; }
+        .badge-green { background: #ecfdf5; color: #059669; }
 
         .arrow {
           width: 42px;
@@ -113,14 +167,50 @@ export default function Home() {
           box-shadow: 0 6px 12px rgba(15,23,42,0.08);
         }
 
+        .demo-banner {
+          width: 100%;
+          max-width: 860px;
+          margin: 36px auto 0;
+          background: rgba(255,255,255,0.84);
+          backdrop-filter: blur(14px);
+          border: 1px solid rgba(226,232,240,0.9);
+          border-radius: 24px;
+          padding: 28px 34px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          text-align: left;
+          box-shadow: 0 8px 32px rgba(15,23,42,0.05);
+        }
+
+        .demo-btn {
+          flex-shrink: 0;
+          padding: 12px 26px;
+          border-radius: 999px;
+          background: #0f172a;
+          color: #ffffff;
+          font-size: 14px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: background .2s ease, transform .2s ease;
+          display: inline-block;
+        }
+
+        .demo-btn:hover {
+          background: #1e293b;
+          transform: translateY(-1px);
+        }
+
         @media (max-width: 760px) {
-          .cards-grid {
-            grid-template-columns: 1fr;
-          }
+          .cards-grid { grid-template-columns: 1fr; }
+          .stats-grid { grid-template-columns: repeat(2, 1fr); }
+          .traction-grid { grid-template-columns: repeat(2, 1fr); }
+          .demo-banner { flex-direction: column; text-align: center; }
         }
       `}</style>
 
-      {/* background glow */}
+      {/* background glows */}
       <div
         style={{
           position: "absolute",
@@ -133,7 +223,6 @@ export default function Home() {
           right: -80,
         }}
       />
-
       <div
         style={{
           position: "absolute",
@@ -156,6 +245,7 @@ export default function Home() {
           textAlign: "center",
         }}
       >
+        {/* Eyebrow */}
         <p
           className="fade delay-1"
           style={{
@@ -167,9 +257,10 @@ export default function Home() {
             marginBottom: 24,
           }}
         >
-          Clinical Vision Assessment
+          BeyondColor · AI-Powered Color Vision Platform
         </p>
 
+        {/* Headline */}
         <h1
           className="fade delay-2"
           style={{
@@ -180,17 +271,18 @@ export default function Home() {
             color: "#0f172a",
           }}
         >
-          Color Vision
+          See the world
           <br />
           <span style={{ color: "#64748b", fontStyle: "italic" }}>
-            Testing Suite
+            your way
           </span>
         </h1>
 
+        {/* Subheading */}
         <p
           className="fade delay-3"
           style={{
-            margin: "22px auto 46px",
+            margin: "22px auto 40px",
             maxWidth: 580,
             fontSize: 17,
             lineHeight: 1.8,
@@ -198,11 +290,53 @@ export default function Home() {
             fontWeight: 400,
           }}
         >
-          Scientifically validated assessments for red-green deficiency and hue
-          discrimination in a refined, modern clinical experience.
+          Clinically validated color vision testing with AI analytics — detecting
+          color vision differences early and adapting learning environments for
+          every student.
         </p>
 
-        <div className="cards-grid fade delay-4">
+        {/* Stats */}
+        <div className="stats-grid fade delay-3">
+          <div className="stat-card">
+            <div className="stat-num">350M+</div>
+            <div className="stat-lbl">people affected by CVD worldwide</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-num">80%</div>
+            <div className="stat-lbl">of color-blind students enter secondary school undiagnosed</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-num">60+</div>
+            <div className="stat-lbl">clinical study participants, UAE hospital</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-num">AUC 1.0</div>
+            <div className="stat-lbl">hue-model accuracy in job-fit prediction</div>
+          </div>
+        </div>
+
+        {/* Traction */}
+        <div className="traction-grid fade delay-4">
+          <div className="traction-card">
+            <div className="traction-label">Recognition</div>
+            <div className="traction-val">NSF I-Corps Regional Program</div>
+          </div>
+          <div className="traction-card">
+            <div className="traction-label">Presented at</div>
+            <div className="traction-val">SPIE Photonics West · Tech for Good, UChicago</div>
+          </div>
+          <div className="traction-card">
+            <div className="traction-label">Clinical partner</div>
+            <div className="traction-val">Dr. Manish Jain, Al Dhannah Hospital, UAE</div>
+          </div>
+          <div className="traction-card">
+            <div className="traction-label">Funding secured</div>
+            <div className="traction-val">$6,000 non-dilutive · Pre-seed in progress</div>
+          </div>
+        </div>
+
+        {/* Test cards */}
+        <div className="cards-grid fade delay-5">
           {/* Ishihara */}
           <Link href="/ishihara" className="card-link">
             <div className="card card-blue">
@@ -216,9 +350,7 @@ export default function Home() {
                   marginBottom: 24,
                 }}
               />
-
               <span className="badge badge-blue">24 Plates</span>
-
               <h2
                 style={{
                   fontSize: 28,
@@ -229,7 +361,6 @@ export default function Home() {
               >
                 Ishihara Test
               </h2>
-
               <p
                 style={{
                   fontSize: 15,
@@ -241,7 +372,6 @@ export default function Home() {
                 Gold-standard screening for red-green color vision deficiency
                 using clinically recognized pseudoisochromatic plates.
               </p>
-
               <div
                 style={{
                   display: "flex",
@@ -249,16 +379,9 @@ export default function Home() {
                   alignItems: "center",
                 }}
               >
-                <span
-                  style={{
-                    color: "#0f6fff",
-                    fontWeight: 600,
-                    fontSize: 14,
-                  }}
-                >
+                <span style={{ color: "#0f6fff", fontWeight: 600, fontSize: 14 }}>
                   Start test
                 </span>
-
                 <div className="arrow">
                   <ArrowRight size={16} />
                 </div>
@@ -279,9 +402,7 @@ export default function Home() {
                   marginBottom: 24,
                 }}
               />
-
               <span className="badge badge-green">Adaptive</span>
-
               <h2
                 style={{
                   fontSize: 28,
@@ -292,7 +413,6 @@ export default function Home() {
               >
                 Hue Discrimination
               </h2>
-
               <p
                 style={{
                   fontSize: 15,
@@ -304,7 +424,6 @@ export default function Home() {
                 Measure sensitivity to subtle color differences across the full
                 visible spectrum with adaptive precision.
               </p>
-
               <div
                 style={{
                   display: "flex",
@@ -312,16 +431,9 @@ export default function Home() {
                   alignItems: "center",
                 }}
               >
-                <span
-                  style={{
-                    color: "#059669",
-                    fontWeight: 600,
-                    fontSize: 14,
-                  }}
-                >
+                <span style={{ color: "#059669", fontWeight: 600, fontSize: 14 }}>
                   Start test
                 </span>
-
                 <div className="arrow">
                   <ArrowRight size={16} />
                 </div>
@@ -330,15 +442,66 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* Demo request banner */}
+        <div className="demo-banner fade delay-6">
+          <div>
+            <p
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: ".1em",
+                textTransform: "uppercase",
+                color: "#94a3b8",
+                marginBottom: 6,
+              }}
+            >
+              For schools, clinics & platforms
+            </p>
+            <h3
+              style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontSize: 24,
+                fontWeight: 400,
+                margin: "0 0 6px",
+                color: "#0f172a",
+              }}
+            >
+              Request a demo
+            </h3>
+            <p style={{ fontSize: 14, color: "#64748b", margin: 0, lineHeight: 1.6 }}>
+              Interested in piloting BeyondColor? Reach out at{" "}
+              <a
+                href="mailto:rahilfaruk@gmail.com"
+                style={{ color: "#0f6fff", textDecoration: "none" }}
+              >
+                rahilfaruk@gmail.com
+              </a>
+            </p>
+          </div>
+          <a
+            href="mailto:rahilfaruk@gmail.com?subject=BeyondColor%20Demo%20Request"
+            className="demo-btn"
+          >
+            Request demo →
+          </a>
+        </div>
+
+        {/* Footer */}
         <p
           style={{
-            marginTop: 44,
+            marginTop: 36,
             fontSize: 12,
             color: "#94a3b8",
           }}
         >
-          © {new Date().getFullYear()} Color Vision App · Educational screening
-          only
+          © {new Date().getFullYear()} BeyondColor · University of Chicago Medicine ·{" "}
+          Educational screening only ·{" "}
+          <a
+            href="mailto:rahilfaruk@gmail.com"
+            style={{ color: "#94a3b8", textDecoration: "none" }}
+          >
+            rahilfaruk@gmail.com
+          </a>
         </p>
       </div>
     </main>
