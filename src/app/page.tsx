@@ -261,7 +261,7 @@ export default function Home() {
             ))}
           </div>
           <div className="bc-float-card stat1">
-            <div className="bc-float-num">AUC 1.0</div>
+            <div className="bc-float-num">AUC 0.89</div>
             <div className="bc-float-lbl">Hue model job-fit accuracy</div>
           </div>
           <div className="bc-float-card stat2">
@@ -317,7 +317,7 @@ export default function Home() {
           </div>
           <div className="bc-product-right">
             {[
-              { n: "AUC 1.0", l: "Hue model job-fit prediction accuracy" },
+              { n: "AUC 0.89", l: "Hue model job-fit prediction accuracy" },
               { n: "85%",     l: "Of ophthalmologists say Ishihara alone doesn't meet their needs" },
               { n: "60+",     l: "Participants in our UAE hospital clinical validation study" },
             ].map((s) => (
@@ -405,12 +405,7 @@ export default function Home() {
                   role: "Co-Founder",
                   bio: "MSc Computer Science, University of Kansas. Drives platform architecture, AI model development, and accessibility engineering.",
                 },
-                {
-                  initials: "MJ",
-                  name: "Dr. Manish Jain",
-                  role: "Clinical Advisor",
-                  bio: "MBBS, DNB, FRCS. Specialist Ophthalmologist at Al Dhannah Hospital, UAE. Leads the prospective clinical validation study.",
-                },
+                
               ].map((p) => (
                 <div className="bc-team-card" key={p.name}>
                   <div className="bc-team-avatar">{p.initials}</div>
